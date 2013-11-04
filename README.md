@@ -11,7 +11,9 @@ Super Hexagon Unwrapper
 
 ## Tested Videos
 
-You can use [this firefox plugin](https://addons.mozilla.org/en-US/firefox/addon/download-youtube/) or [this chrome plugin](http://www.chromeextensions.org/utilities/chrome-youtube-downloader/) for downloading youtube videos for testing this script.
+This project has been tested on the following videos:
 
 * [Super Hexagon Trailer](http://www.youtube.com/watch?v=2sz0mI_6tLQ)
 * [Super Hexagon Ending](http://www.youtube.com/watch?v=cmZLrW69PwY)
+
+(You can use [this firefox plugin](https://addons.mozilla.org/en-US/firefox/addon/download-youtube/) or [this chrome plugin](http://www.chromeextensions.org/utilities/chrome-youtube-downloader/) for downloading youtube videos for testing this script.)
