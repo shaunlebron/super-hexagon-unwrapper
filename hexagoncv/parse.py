@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
     # Run a test
     display = Display()
-    p = parse_frame(Image('../img/hex003.png'))
+    p = parse_frame(Image('test.jpg'))
     if p:
         img = p.center_img.binarize()
         p.draw_frame(img.dl())

@@ -244,7 +244,7 @@ def start_unwrap_window(width, height, draw_callback):
     pyglet.app.run()
 
 if __name__ == "__main__":
-    img_path = '../img/hex001.png'
+    img_path = 'test.jpg'
     img = Image(img_path)
     w,h = img.size()
     img.show()
