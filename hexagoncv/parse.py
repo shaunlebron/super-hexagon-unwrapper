@@ -5,7 +5,7 @@ Computer Vision.
 
 from SimpleCV import *
 
-from simplify_blob import simplify_by_area, simplify_by_angle
+from simplify_polygon import simplify_polygon_by_angle
 
 class ParsedFrame:
     """
@@ -30,7 +30,7 @@ class ParsedFrame:
 
         # vertices of the center polygon
         # (remove redundant vertices)
-        self.center_vertices = simplify_by_angle(center_blob.hull())
+        self.center_vertices = simplify_polygon_by_angle(center_blob.hull())
     
     def draw_frame(self, layer, linecolor=Color.RED, pointcolor=Color.WHITE):
         """
