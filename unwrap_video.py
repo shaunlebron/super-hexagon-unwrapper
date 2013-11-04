@@ -67,6 +67,7 @@ def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_
     # create state object for the "on_draw" callback
     self = {
         "i": i,
+        "total": 0,
         "first_img": img,
     }
 
@@ -127,6 +128,8 @@ def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_
                 # Dump the unwrapped frame.
                 unwrapper.save_image(unwrap_name)
 
+        self["total"] += 1
+
         # Stop processing if we reached the last requested frame.
         if self["i"] == stop_frame:
             raise VideoDone()
@@ -148,9 +151,9 @@ def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_
 
     # Print final log message.
     if dump_dir:
-        log('Dumped',self["i"],'frames to "%s".' % dump_dir)
+        log('Dumped',self["total"],'frames to "%s".' % dump_dir)
     else:
-        log(self["i"],'frames processed.')
+        log(self["total"],'frames processed.')
 
     # Append new line so the terminal can continue after our log line.
     if print_log:
