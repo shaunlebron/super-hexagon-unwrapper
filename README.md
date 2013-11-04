@@ -29,7 +29,7 @@ You can use the script with the following options as well:
 ## Dependencies
 
 * Python 2.7
-* [SimpleCV](http://www.simplecv.org/) 2.3+ (video processing and computer vision)
+* [SimpleCV](http://www.simplecv.org/) 1.3 (video processing and computer vision)
 * [Pyglet](http://www.pyglet.org/) (OpenGL shaders for image transforming)
 
 (This [link](http://help.simplecv.org/question/300/ioerror-file-not-found-while-trying-display/?answer=993#post-id-993) solved a problem with the Debian package for SimpleCV that I was having.)
