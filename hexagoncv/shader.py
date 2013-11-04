@@ -1,3 +1,5 @@
+# taken from: http://swiftcoder.wordpress.com/2008/12/19/simple-glsl-wrapper-for-pyglet/
+
 #
 # Copyright Tristam Macdonald 2008.
 #
