@@ -1,8 +1,8 @@
 Super Hexagon Unwrapper
 =======================
 
-A python script that plays a Super Hexagon video next to an _unwrapped_ version
-of it, in near realtime.
+A utility that "unwraps" a Super Hexagon video to show an alternative
+perspective:
 
 ![comparison](img/comparison.gif)
 
