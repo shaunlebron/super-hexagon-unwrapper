@@ -77,6 +77,9 @@ def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_
         return "%s/%s%04d.jpg" % (dump_dir, prefix, self["i"])
 
     def on_draw():
+        """
+        Our main processing loop that is called by the OpenGL window draw event.
+        """
 
         # get first image or read next image
         img = self["first_img"]
@@ -102,7 +105,7 @@ def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_
         # Get the features out of the image.
         frame = parse_frame(img)
 
-        # Process 
+        # Generate and show the unwrapped image.
         if frame:
             if not dump_dir:
                 # Write the image to a temp file so pyglet can read the texture.
@@ -110,11 +113,18 @@ def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_
                 unwrapper.update('tmp.jpg', frame)
                 unwrapper.draw()
             else:
+                # Create file names of the dumped frames.
                 orig_name = get_dump_name('orig')
                 unwrap_name = get_dump_name('unwrap')
+
+                # Dump the original frame.
                 img.save(orig_name)
+
+                # Update the unwrapper and draw the unwrapped frame.
                 unwrapper.update(orig_name, frame)
                 unwrapper.draw()
+
+                # Dump the unwrapped frame.
                 unwrapper.save_image(unwrap_name)
 
         # Stop processing if we reached the last requested frame.
