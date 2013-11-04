@@ -58,7 +58,7 @@ def parse_frame(img):
     center_img = bg_img.erode()
     blobs = center_img.findBlobs()
     if blobs:
-        size = 260
+        size = h * 0.6667
         for b in blobs:
             try:
                 if b.width() < size and b.height() < size and b.contains((midx,midy)):
