@@ -1,5 +1,5 @@
 """
-Shows the given Super Hexagon video and an unwrapped* version side-by-side.
+Shows the given Super Hexagon video next to an unwrapped* version of it.
 
 *unwrapped means the walls fall top-to-bottom instead of out-to-in.
 """
@@ -22,14 +22,15 @@ class VideoDone(Exception):
     """
     pass
 
-def unwrap_video(video_path, start_frame=0, dump_dir=None, print_log=True):
+def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_log=True):
     """
-    Shows the given Super Hexagon video and an 'unwrapped' version side-by-side.
+    Shows the given Super Hexagon video next to an unwrapped* version of it.
 
     *unwrapped means the walls fall top-to-bottom instead of out-to-in.
 
     video_path  = path to the Super Hexagon video
-    start_frame = first frame to start at in the video
+    start_frame = start at this frame in the video
+    stop_frame = stop at this frame in the video
     frames_dir  = directory to dump the frames in
     """
 
@@ -73,7 +74,7 @@ def unwrap_video(video_path, start_frame=0, dump_dir=None, print_log=True):
         """
         Get the filename of the dumped frame.
         """
-        return "%s/%s%04d.png" % (dump_dir, prefix, self["i"])
+        return "%s/%s%04d.jpg" % (dump_dir, prefix, self["i"])
 
     def on_draw():
 
@@ -105,8 +106,8 @@ def unwrap_video(video_path, start_frame=0, dump_dir=None, print_log=True):
         if frame:
             if not dump_dir:
                 # Write the image to a temp file so pyglet can read the texture.
-                img.save('tmp.png')
-                unwrapper.update('tmp.png', frame)
+                img.save('tmp.jpg')
+                unwrapper.update('tmp.jpg', frame)
                 unwrapper.draw()
             else:
                 orig_name = get_dump_name('orig')
@@ -115,6 +116,10 @@ def unwrap_video(video_path, start_frame=0, dump_dir=None, print_log=True):
                 unwrapper.update(orig_name, frame)
                 unwrapper.draw()
                 unwrapper.save_image(unwrap_name)
+
+        # Stop processing if we reached the last requested frame.
+        if self["i"] == stop_frame:
+            raise VideoDone()
 
         self["i"] += 1
 
@@ -125,9 +130,9 @@ def unwrap_video(video_path, start_frame=0, dump_dir=None, print_log=True):
         pass
 
     # Try to remove the temporary image file.
-    if dump_dir:
+    if not dump_dir:
         try:
-            os.remove('tmp.png')
+            os.remove('tmp.jpg')
         except OSError:
             pass
 
@@ -144,18 +149,24 @@ def unwrap_video(video_path, start_frame=0, dump_dir=None, print_log=True):
 if __name__ == "__main__":
 
     # Create argument parser
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('video_path', help='path to video of super hexagon')
-    parser.add_argument('--dump', help='dump frames into this directory')
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawTextHelpFormatter)
+        #usage="%(prog)s [options] video")
+    parser.add_argument('video', help='path to video of super hexagon')
+    parser.add_argument('--dumpdir', help='dump frames into this directory')
     parser.add_argument('--start', type=int, help='start at this frame of the video')
+    parser.add_argument('--stop', type=int, help='stop at this frame of the video')
     args = parser.parse_args()
 
     # Create optional args from those parsed
     opts = {}
-    if args.dump:
-        opts['dump_dir'] = args.dump
+    if args.dumpdir:
+        opts['dump_dir'] = args.dumpdir
     if args.start:
         opts['start_frame'] = args.start
+    if args.stop:
+        opts['stop_frame'] = args.stop
 
     # Unwrap video
-    unwrap_video(args.video_path, **opts)
+    unwrap_video(args.video, **opts)
