@@ -4,7 +4,7 @@ Super Hexagon Unwrapper
 A python script that plays a Super Hexagon video next to an _unwrapped_ version
 of it, in near realtime.
 
-![comparison](img/comparison.jpg)
+![comparison](img/comparison.gif)
 
 ## Usage
 
