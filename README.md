@@ -4,16 +4,14 @@ Super Hexagon Unwrapper
 ## Setup
 
 * Python 2.7
-* SimpleCV 2.3+ (I used the .deb package on Ubuntu 12.10)
-* Pyglet (fragment shaders for quick image transformation)
+* [SimpleCV](http://www.simplecv.org/) 2.3+ (video processing and computer vision)
+* [Pyglet](http://www.pyglet.org/) (OpenGL shaders for image transforming)
 
-Links that have helped with setup:
+(This [link](http://help.simplecv.org/question/300/ioerror-file-not-found-while-trying-display/?answer=993#post-id-993) solved a problem with the Debian package for SimpleCV that I was having.)
 
-* http://help.simplecv.org/question/300/ioerror-file-not-found-while-trying-display/
-* http://help.simplecv.org/question/444/working-with-video-files/
-* https://addons.mozilla.org/en-US/firefox/addon/download-youtube/
+## Tested Videos
 
-### Videos used:
+You can use [this firefox plugin](https://addons.mozilla.org/en-US/firefox/addon/download-youtube/) or [this chrome plugin](http://www.chromeextensions.org/utilities/chrome-youtube-downloader/) for downloading youtube videos for testing this script.
 
 * [Super Hexagon Trailer](http://www.youtube.com/watch?v=2sz0mI_6tLQ)
 * [Super Hexagon Ending](http://www.youtube.com/watch?v=cmZLrW69PwY)
