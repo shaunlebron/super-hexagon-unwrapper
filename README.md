@@ -1,7 +1,32 @@
 Super Hexagon Unwrapper
 =======================
 
-## Setup
+A python script that plays a Super Hexagon video next to an _unwrapped_ version
+of it, in near realtime.
+
+![comparison](img/comparison.jpg)
+
+## Usage
+
+```
+> python unwrap_video.py vid/trailer.mp4
+```
+
+This will pop-up two windows, one with the original video and another with the
+unwrapped video.
+
+![screenshot](img/screenshot.jpg)
+
+You can use the script with the following options as well:
+
+```
+--help          (show all options)
+--start N       (start at frame N)
+--stop N        (stop at frame N)
+--dumpdir DIR   (dump all frames into the given DIR)
+```
+
+## Dependencies
 
 * Python 2.7
 * [SimpleCV](http://www.simplecv.org/) 2.3+ (video processing and computer vision)
