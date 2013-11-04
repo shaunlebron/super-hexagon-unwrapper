@@ -1,11 +1,13 @@
-# taken from: http://swiftcoder.wordpress.com/2008/12/19/simple-glsl-wrapper-for-pyglet/
+"""
+A Pyglet helper class for using OpenGL shaders.
 
-#
-# Copyright Tristam Macdonald 2008.
-#
-# Distributed under the Boost Software License, Version 1.0
-# (see http://www.boost.org/LICENSE_1_0.txt)
-#
+taken from: http://swiftcoder.wordpress.com/2008/12/19/simple-glsl-wrapper-for-pyglet/
+
+Copyright Tristam Macdonald 2008.
+
+Distributed under the Boost Software License, Version 1.0
+(see http://www.boost.org/LICENSE_1_0.txt)
+"""
 
 from pyglet.gl import *
 
