@@ -2,39 +2,38 @@
 Given a Super Hexagon image and the vertices of its center polygon, this module
 creates a new image by unwrapping it with the coordinate transform shown below:
 
+(Vertices of the center polygon are marked [1][2][3][4][5][6])
 
-            ORIGINAL                                   UNWRAPPED
 
-               2                       ________________________________________
-           .........                  ^                                        |
-        ..............X             K |                                        |
-     ................/....          * |                                        |
-  ................../........       R |                                        |
-3.........RADIUS=>./..........1     A |                                        |
-................../............     D |                                        |
-................./.............     I |                                        |
-................/.ANGLE........     U |                                        |
-...............O===============     S |                                        |
-...............................       |                                        |
-...............................     @ |                                        |
-...............................       |                                        |
-4.............................6     A |                                        |
-  ...........................       N |                                        |
-     .....................          G |   1   X  2      3      4      5     6  |
-        ...............             L ||::::::|::::::::::::::::::::::::::::::::|
-           .........                E ||::::::|::::::::::::::::::::::::::::::::|
-               5                      ||::::::|::::::::::::::::::::::::::::::::|
-                                      0--------------------------------------->
-                                                        ANGLE
+              ORIGINAL                                 UNWRAPPED
+  
+                 [2]                   ________________________________________
+                 ...                  |                                        ^
+              .........               |                                        |
+           ..............X            |                                        |
+        ................/....         |                                        |
+     ................../........      |                                        |
+[3]........R(ANGLE)->./...........[1] |                                        |
+   ................../............    |                                        |<--R(ANGLE)*4
+   ................./\.<-ANGLE....    |                                        |
+   ................/..\...........    |                                        |
+   ...............O===============    |                                        |<--R(ANGLE)*3
+   ...............................    |                                        |
+   ...............................    |                                        |
+   ...............................    |                                        |<--R(ANGLE)*2
+[4]...............................[6] |                                        |
+     ...........................      |  [1]  X [2]    [3]    [4]    [5]   [6] |
+        .....................         ||::::::|::::::::::::::::::::::::::::::::|<--R(ANGLE)
+           ...............            ||::::::|::::::::::::::::::::::::::::::::|
+              .........               ||::::::|::::::::::::::::::::::::::::::::|
+                 ...                  0--------------------------------------->
+                 [5]                                    ANGLE
 
-Note the numbered vertices [1,2,3,4,5,6] in both forms.
+R(ANGLE) is a function that returns the distance from the center of the polygon
+to the edge of the polygon at the given angle.
 
-Also note that the "radius" of the polygon is different for every angle.  Its
-defined as the distance between the center and boundary of the polygon at a
-given angle.
-
-The Y-axis in the unwrapped form is simply the radius of the polygon at the
-given angle, multiplied by some arbitrary factor K.
+NOTICE: The Y-axis of the Unwrapped plot is warped such that R(ANGLE) lies on
+the same horizontal line for all values of ANGLE.
 
 """
 
@@ -47,9 +46,7 @@ from shader import Shader
 from parse import parse_frame
 
 def dist(p0,p1):
-    """
-    Distance between two points.
-    """
+    """Distance between two 2D points."""
     x0,y0 = p0
     x1,y1 = p1
     dx = x0-x1
@@ -57,9 +54,7 @@ def dist(p0,p1):
     return math.sqrt(dx*dx + dy*dy)
 
 class Vertex:
-    """
-    A vertex of a polygon, containing calculated properties of that vertex.
-    """
+    """A vertex of a polygon, containing calculated properties of that vertex."""
     def __init__(self,point,center):
         self.point = point
         self.center = center
@@ -75,6 +70,25 @@ class TriangleProjector:
     Given two Vertex objects sharing a center point, this class determines the
     distance from that center point to the line segment of those two vertices
     along the direction of a given angle.
+
+    To illustrate:
+
+        vertex1   = V1
+        vertex2   = V2
+        center    = C
+        intersect = X
+
+                V1 .............X........... V2
+                      ..........|........
+                           .....|....
+                               .|.
+                                C
+
+    After computing the distance from C to X, we can compute the distance
+    from the center to any point on V1->V2 given some angle:
+
+          R(ANGLE) = |CX| / cos(ANGLE - angle(CX))
+
     """
 
     def __init__(self, vertex1, vertex2):
@@ -105,15 +119,15 @@ class TriangleProjector:
         # (This is just the x-component of our rotated center point, so we pick
         # the point that is 'x' distance along the line between vertex 1 and
         # 2.)
-        self.mid_point = (
+        intersect = (
                 int(point1[0] + x * rel_point2[0]/den),
                 int(point1[1] + x * rel_point2[1]/den))
 
         # The angle to the mid point.
-        self.center_angle = math.atan2(self.mid_point[1]-point_center[1], self.mid_point[0]-point_center[0])
+        self.center_angle = math.atan2(intersect[1]-point_center[1], intersect[0]-point_center[0])
 
         # Distance from the center point to the mid point on the line segment.
-        self.center_dist = dist(self.mid_point, point_center)
+        self.center_dist = dist(intersect, point_center)
     
     def is_angle_inside(self, angle):
         """
@@ -177,6 +191,7 @@ uniform sampler2D tex0;
 // defined in pixels
 uniform vec2 region_size;
 uniform vec2 actual_size;
+
 uniform float angle_bounds[14];
 uniform float radii[13];
 uniform float angles[13];
