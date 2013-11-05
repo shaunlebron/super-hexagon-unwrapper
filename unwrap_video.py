@@ -106,6 +106,10 @@ def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_
         # Get the features out of the image.
         frame = parse_frame(img)
 
+        # Create file names of the dumped frames.
+        orig_name = get_dump_name('orig')
+        unwrap_name = get_dump_name('unwrap')
+
         # Generate and show the unwrapped image.
         if frame:
             if not dump_dir:
@@ -114,10 +118,6 @@ def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_
                 unwrapper.update('tmp.jpg', frame)
                 unwrapper.draw()
             else:
-                # Create file names of the dumped frames.
-                orig_name = get_dump_name('orig')
-                unwrap_name = get_dump_name('unwrap')
-
                 # Dump the original frame.
                 img.save(orig_name)
 
@@ -126,6 +126,11 @@ def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_
                 unwrapper.draw()
 
                 # Dump the unwrapped frame.
+                unwrapper.save_image(unwrap_name)
+        else:
+            if dump_dir:
+                # dump the current images if the parsing failed
+                img.save(orig_name)
                 unwrapper.save_image(unwrap_name)
 
         self["total"] += 1
