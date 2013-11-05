@@ -16,7 +16,7 @@ creates a new image by unwrapping it with the coordinate transform shown below:
 [3]........R(ANGLE)->./...........[1] |                                        |
    ................../............    |                                        |<--R(ANGLE)*4
    ................./\.<-ANGLE....    |                                        |
-   ................/..\...........    |                                        |
+   ................/  \...........    |                                        |
    ...............O===============    |                                        |<--R(ANGLE)*3
    ...............................    |                                        |
    ...............................    |                                        |
@@ -32,9 +32,8 @@ creates a new image by unwrapping it with the coordinate transform shown below:
 R(ANGLE) is a function that returns the distance from the center of the polygon
 to the edge of the polygon at the given angle.
 
-NOTICE: The Y-axis of the Unwrapped plot is warped such that R(ANGLE) lies on
-the same horizontal line for all values of ANGLE.
-
+NOTE: The Y-axis of the Unwrapped plot is warped such that R(ANGLE) lies on the
+same horizontal line for all values of ANGLE.
 
 
 DISTORTION WARNING: There is visible image distortion resulting from (1) subtle
