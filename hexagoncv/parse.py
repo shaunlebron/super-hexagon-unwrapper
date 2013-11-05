@@ -21,6 +21,7 @@ class ParsedFrame:
 
         self.img = img
         self.center_img = center_img
+        self.center_blob = center_blob
 
         # midpoint of the center polygon
         # (Just assume center of image is center point instead of using
@@ -85,16 +86,19 @@ def parse_frame(img):
     # The 'erode' function does this by expanding the dark parts of the image.
     center_img = bg_img.erode()
 
-    # Locate the first blob within a given size containing the midpoint of the screen.
+    # Locate the blob within a given size containing the midpoint of the screen.
+    # Select the one with the largest area.
     center_blob = None
     blobs = center_img.findBlobs()
+    max_area = 0
     if blobs:
         size = h * 0.6667
         for b in blobs:
             try:
-                if b.width() < size and b.height() < size and b.contains((midx,midy)):
+                area = b.area()
+                if b.width() < size and b.height() < size and b.contains((midx,midy)) and area > max_area:
+                    area = max_area
                     center_blob = b
-                    break
             except ZeroDivisionError:
                 # blob 'contains' function throws this exception for some cases.
                 continue
