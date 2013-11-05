@@ -35,6 +35,13 @@ to the edge of the polygon at the given angle.
 NOTICE: The Y-axis of the Unwrapped plot is warped such that R(ANGLE) lies on
 the same horizontal line for all values of ANGLE.
 
+
+
+DISTORTION WARNING: There is visible image distortion resulting from (1) subtle
+errors in the locations of the vertices and (2) perspective deformation of the
+image.  It is a hard problem to undo perspective deformation, so this
+'unwrapping' is only an approximation.
+
 """
 
 from SimpleCV import *
