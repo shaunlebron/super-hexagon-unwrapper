@@ -182,6 +182,7 @@ class PolygonProjector:
             if p.is_angle_inside(angle):
                 return p.angle_to_radius(angle)
 
+# We do not use custom vertex shaders, so this is the default one.
 vertex_shader = """
 void main() {
     // transform the vertex position
@@ -191,20 +192,37 @@ void main() {
 }
 """
 
+# This fragment shader is a compiled GPU program that is executed for
+# every pixel in our new image.
+#    Input:  gl_TexCoord[0].xy   (0 <= x,y < 1  such that x+ right, y+ up)
+#    Output: gl_FragColor
+# The global "uniform" variables are inputs shared by all pixels.
 fragment_shader = """
+
+// the texture holding the original game image
 uniform sampler2D tex0;
 
-// defined in pixels
-uniform vec2 region_size;
+// size of texture in memory (padded to meet a power of 2)
 uniform vec2 actual_size;
 
+// size of the active region of the texture (excluding the padding)
+uniform vec2 region_size;
+
+// angle of each vertex
+// (14 is arbitrary length to allow for redundant vertices)
 uniform float angle_bounds[14];
+
+// The radius and angle of each edge center
+// (13 is 1 less than the length of angle_bounds)
 uniform float radii[13];
 uniform float angles[13];
+
+// number of edges
 uniform int count;
 
 float PI = 3.14159265358979323846264;
 
+// get radius of the polygon at the given angle
 float get_radius(float angle) {
     int i;
     for (i=0; i<count; i++) {
@@ -216,17 +234,24 @@ float get_radius(float angle) {
 }
 
 void main() {
+
     vec2 c = gl_TexCoord[0].xy;
 
+    // interpolate angle between -pi and pi
     float angle = c.x*PI*2.0 - PI;
+
+    // interpolate radius between 0 and 11*radius(angle)
     float poly_radius = get_radius(angle);
     float max_radius = poly_radius * 11.0;
     float r = c.y * max_radius;
 
+    // calculate the pixel position to retrieve from the original texture
     vec2 p = region_size/2.0 + r * vec2(cos(angle),-sin(angle));
 
+    // convert pixel position to texture UV coordinates
     p /= actual_size;
 
+    // Return color of that pixel if in bounds, else return black.
     if (0.0 <= p.x && p.x < 1.0 && 0.0 <= p.y && p.y < 1.0) {
         gl_FragColor = vec4(texture2D(tex0, p).rgb, 1.0);
     }
@@ -237,28 +262,46 @@ void main() {
 """
 
 class Unwrapper:
+    """
+    This unwrapper takes an image path and a parsed frame and fulfills
+    the operations required to draw the unwrapped image.
+
+    The draw operations MUST be called inside of the "on_draw" callback
+    passed to "start_unwrap_window" in order to be fulfilled.  This class
+    cannot function without an OpenGL window.
+    """
     def __init__(self):
+
+        # Create the shader.
         self.shader = Shader(vertex_shader, fragment_shader)
+
+        # Set the texture unit.
         self.shader.bind()
         self.shader.uniformi('tex0', 0)
         self.shader.unbind()
 
-        # create a fullscreen quad
+        # Create a quad geometry to fit the whole window that will be the target of our drawing.
         self.batch = pyglet.graphics.Batch()
         self.batch.add(4, GL_QUADS, None, ('v2i', (0,0, 1,0, 1,1, 0,1)), ('t2f', (0,0, 1,0, 1,1, 0,1)))
 
     def update(self, img_path, frame):
+        """
+        Update the texture to the given image path, and update the shaders with the new
+        frame information to unwrap the given image correctly.
+        """
 
+        # Recalculate the variables required to unwrap the new image.
         projector = PolygonProjector(frame.center_point, frame.center_vertices)
         angle_bounds = [v.angle for v in projector.vertices]
         radii = [p.center_dist for p in projector.projectors]
         angles = [p.center_angle for p in projector.projectors]
 
+        # Load the new image, and update the size variables.
         self.texture = pyglet.image.load(img_path).get_texture()
         region_w, region_h = self.texture.width, self.texture.height
         actual_w, actual_h = self.texture.owner.width, self.texture.owner.height
 
-        # set the correct texture unit
+        # Update the shader variables.
         self.shader.bind()
         self.shader.uniformf('region_size', region_w, region_h)
         self.shader.uniformf('actual_size', actual_w, actual_h)
@@ -269,6 +312,7 @@ class Unwrapper:
         self.shader.unbind()
 
     def draw(self):
+        """Draw the unwrapped image to the window."""
         glBindTexture(self.texture.target, self.texture.id)
         self.shader.bind()
         self.batch.draw()
@@ -276,12 +320,20 @@ class Unwrapper:
         glBindTexture(self.texture.target, 0)
 
     def save_image(self, filename):
+        """Save the current window image to the given filename."""
         pyglet.image.get_buffer_manager().get_color_buffer().save(filename)
 
     def get_fps(self):
+        """Get the current framerate in frames per second."""
         return pyglet.clock.get_fps()
 
 def start_unwrap_window(width, height, draw_callback):
+    """
+    This starts the Pyglet OpenGL window and does not return until window has exited.
+
+    draw_callback = a function that is called every frame (usually for the purpose of drawing)
+    """
+
     window = pyglet.window.Window(width, height, resizable=False, visible=False, caption="Unwrap")
 
     @window.event
@@ -297,12 +349,16 @@ def start_unwrap_window(width, height, draw_callback):
     def on_draw():
         draw_callback()
 
+    # This is a dummy event whose presence in the event queue causes consistent redrawing.
+    # Otherwise, the window would only draw when necessary (e.g. when window is moved).
     pyglet.clock.schedule_interval(lambda dt: None, 1.0/60.0)
      
     window.set_visible(True)
     pyglet.app.run()
 
 if __name__ == "__main__":
+
+    # Run a test by unwrapping a screenshot.
     img_path = 'test.jpg'
     img = Image(img_path)
     w,h = img.size()
