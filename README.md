@@ -4,7 +4,6 @@
 
 ![diagram](img/diagram.png)
 
-----
 
 ```
 Unwrap a video:
