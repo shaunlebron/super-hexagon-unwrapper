@@ -1,4 +1,42 @@
-import io
+"""
+Given a Super Hexagon image and the vertices of its center polygon, this module
+creates a new image by unwrapping it with the coordinate transform shown below:
+
+
+            ORIGINAL                                   UNWRAPPED
+
+               2                       ________________________________________
+           .........                  ^                                        |
+        ..............X             K |                                        |
+     ................/....          * |                                        |
+  ................../........       R |                                        |
+3.........RADIUS=>./..........1     A |                                        |
+................../............     D |                                        |
+................./.............     I |                                        |
+................/.ANGLE........     U |                                        |
+...............O===============     S |                                        |
+...............................       |                                        |
+...............................     @ |                                        |
+...............................       |                                        |
+4.............................6     A |                                        |
+  ...........................       N |                                        |
+     .....................          G |   1   X  2      3      4      5     6  |
+        ...............             L ||::::::|::::::::::::::::::::::::::::::::|
+           .........                E ||::::::|::::::::::::::::::::::::::::::::|
+               5                      ||::::::|::::::::::::::::::::::::::::::::|
+                                      0--------------------------------------->
+                                                        ANGLE
+
+Note the numbered vertices [1,2,3,4,5,6] in both forms.
+
+Also note that the "radius" of the polygon is different for every angle.  Its
+defined as the distance between the center and boundary of the polygon at a
+given angle.
+
+The Y-axis in the unwrapped form is simply the radius of the polygon at the
+given angle, multiplied by some arbitrary factor K.
+
+"""
 
 from SimpleCV import *
 
