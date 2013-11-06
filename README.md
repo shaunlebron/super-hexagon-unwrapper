@@ -2,7 +2,7 @@
 
 ![comparison](img/comparison.gif)
 
-![diagram](img/diagram-color.png)
+![diagram](img/diag.gif)
 
 
 ```

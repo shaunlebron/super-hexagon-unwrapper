@@ -46,6 +46,28 @@ import time
 
 from termcolor import colored
 
+ray_color = 'blue'
+angle_color = 'magenta'
+r_color = 'yellow'
+vert_color = 'green'
+
+plot_titles = """
+                ORIGINAL                                   UNWRAPPED"""
+
+paragraph1 = """
+   Given a Super Hexagon image and the vertices of its center polygon, this module
+   creates a new image by unwrapping it with the coordinate transform shown below:
+   
+   (Vertices of the center polygon are marked [1][2][3][4][5][6])
+"""
+
+paragraph2 = "\n".join("   "+line for line in [
+    colored("R(ANGLE)", r_color) +" is a function that returns the distance from the center of the polygon",
+    "to the edge of the polygon at the given angle.",
+    "",
+    "NOTE: The Y-axis of the Unwrapped plot is warped such that "+ colored("R(ANGLE)", r_color) +" lies on the",
+    "same horizontal line for all values of " + colored("ANGLE",angle_color) +"."])
+
 def get_line(p1, p2):
     """
     Bresenham line function that returns a list of (x,y) tuples.
@@ -115,12 +137,10 @@ class AsciiCanvas:
             self.text(x,y,c)
 
     def display(self):
-        os.system('clear')
-        print title2
         print
         for line in self.canvas:
             print ' '+''.join(line)
-        print '\n'*5
+        print
 
     def set_debug_border(self):
         for y in xrange(self.h):
@@ -129,11 +149,6 @@ class AsciiCanvas:
         for x in xrange(self.w):
             self.text(x,0,'-')
             self.text(x,self.h-1,'-')
-
-ray_color = 'blue'
-angle_color = 'magenta'
-r_color = 'yellow'
-vert_color = 'green'
 
 def draw_rest(c,count=6,angle=0):
     # center of polygon
@@ -281,15 +296,22 @@ if __name__ == "__main__":
     c = AsciiCanvas(97,21)
 
     a = 0
-    num_frames = 40
-    da = 2*math.pi/num_frames
-    for i in xrange(num_frames):
+    total_frames = 30
+    frames_per_cycle = 30
+    da = 2*math.pi/frames_per_cycle
+    for i in xrange(total_frames):
         c.clear()
         #c.set_debug_border()
         draw_poly(c,count=6,angle=a)
         draw_rest(c,count=6,angle=a)
+        os.system('clear')
+        print paragraph1
+        print plot_titles
         c.display()
-        a += da
+        print paragraph2
+        print
+        print
+        a -= da
 
         time.sleep(0.1)
 
@@ -297,5 +319,5 @@ if __name__ == "__main__":
         subprocess.call([
             'import',
             '-window',_id,
-            'frame%02d.png' % i,
+            'frame%03d.png' % (i+2119),
         ])
