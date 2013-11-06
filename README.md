@@ -2,8 +2,6 @@
 
 ![comparison](img/comparison.gif)
 
-![diagram](img/diag.gif)
-
 
 ```
 Unwrap a video:

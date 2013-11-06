@@ -1,0 +1,2 @@
+
+![diagram](../img/diag.gif)
