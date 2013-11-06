@@ -12,8 +12,8 @@ import argparse
 import SimpleCV as scv
 
 # Custom "Super Hexagon" parsing library
-from hexagoncv.parse import parse_frame
-from hexagoncv.unwrap import start_unwrap_window, Unwrapper
+from code.parse import parse_frame
+from code.unwrap import start_unwrap_window, Unwrapper
 
 class VideoDone(Exception):
     """
