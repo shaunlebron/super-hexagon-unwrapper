@@ -34,8 +34,10 @@ be retrieved from the original image due to its limited window.  Also notice
 that the projection can be quite distorted in areas.  This results from
 inherent errors in the reference frame and the lack of mathematics in the
 projection to account for 3D rotation of the image.  The projection as it is
-now assumes that the optical axis is perpendicular to the surface of the game.
-The following is an animated excerpt from unwrap.py that describes the math.
+now assumes that all walls in a sector are parallel, which seems to only be
+true when the optical axis is perpendicular to the surface of the game.
+Following this assumption, here is an animated excerpt from unwrap.py that
+describes the projection:
 
 ![diagram](../img/diag.gif)
 
