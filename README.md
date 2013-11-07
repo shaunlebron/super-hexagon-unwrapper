@@ -1,4 +1,4 @@
-![Super Hexagon Unwrapper](img/ascii.png)
+[![Super Hexagon Unwrapper](img/header.gif)](https://vimeo.com/78830111)
 
 __Super Hexagon__ (shown below on the left) is a game by Terry Cavanagh.  This
 project provides a different perspective for this game (shown below on the
