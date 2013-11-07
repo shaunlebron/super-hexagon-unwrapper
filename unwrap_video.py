@@ -172,9 +172,9 @@ if __name__ == "__main__":
         formatter_class=argparse.RawTextHelpFormatter)
         #usage="%(prog)s [options] video")
     parser.add_argument('video', help='path to video of super hexagon')
-    parser.add_argument('--out', help='dump frames into this directory')
-    parser.add_argument('--start', type=int, help='start at this frame of the video')
-    parser.add_argument('--stop', type=int, help='stop at this frame of the video')
+    parser.add_argument('--out', metavar='DIR', help='dump frames into this directory')
+    parser.add_argument('--start', metavar='N', type=int, help='start at this frame of the video')
+    parser.add_argument('--stop', metavar='N', type=int, help='stop at this frame of the video')
     args = parser.parse_args()
 
     # Create optional args from those parsed
