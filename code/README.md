@@ -1,10 +1,10 @@
 ![how it works](../img/title_howitworks.png)
 
-We find the vertices of the center polygon, then extend axis lines from the center
-through each vertex.  This creates the sectors of our reference frame that we
-will use to unwrap the image.  The following script contains the code that
-locates the vertices (commented for your reading).  Running it directly will
-parse and display an image for testing.
+We find the vertices of the center polygon, then extend axis lines from the
+center through each vertex (shown in red below).  This creates the sectors of
+our reference frame that we will use to unwrap the image.  The following script
+contains the code that locates the vertices (commented for your reading).
+Running it directly will parse and display an image for testing.
     
 ```
 Parse a test image:
@@ -29,8 +29,10 @@ Unwrap a test image:
 
 ![unwrap](../img/unwrap.jpg)
 
-Notice that the projection and can be quite distorted in areas.  This results
-from inherent errors in the reference frame and the lack of mathematics in the
+Notice that the unwrapped image has black gaps signifying pixels that could not
+be retrieved from the original image due to its limited window.  Also notice
+that the projection can be quite distorted in areas.  This results from
+inherent errors in the reference frame and the lack of mathematics in the
 projection to account for 3D rotation of the image.  The projection as it is
 now assumes that the optical axis is perpendicular to the surface of the game.
 The following is an animated excerpt from unwrap.py that describes the math.
