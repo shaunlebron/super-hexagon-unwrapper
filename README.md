@@ -9,11 +9,9 @@ the original image causes black space in the new broader image).
 This project is written in Python.  It employs Computer Vision algorithms
 provided by __SimpleCV__ to establish a reference frame in the image.  Then it
 warps (or "unwraps") the image based on that reference frame, using OpenGL
-fragment shaders through __Pyglet__.  (See [how it works](code).)
+fragment shaders.  ([more details here](code))
 
-[(watch the Super Hexagon trailer "unwrapped" here)](https://vimeo.com/78830111)
-
-![comparison](img/comparison.gif)
+[![comparison](img/comparison.gif)](https://vimeo.com/78830111)
 
 ```
 Unwrap a video:
