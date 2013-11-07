@@ -1,17 +1,16 @@
+![diagram](../img/diag.gif)
 
 ```
-Parse the image "test.jpg":
+Parse a test image:
 > python parse.py
 ```
 
 ![parse](../img/parse.jpg)
 
 ```
-Unwrap the image "test.jpg":
+Unwrap a test image:
 > python unwrap.py
 ```
 
 ![unwrap](../img/unwrap.jpg)
 
-
-![diagram](../img/diag.gif)
