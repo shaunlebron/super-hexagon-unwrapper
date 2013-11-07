@@ -6,12 +6,12 @@ right).  Angular motion is converted into lateral motion, resulting in two
 different representations for the same gameplay. (Notice: the limited range of
 the original image causes black space in the new broader image).
 
-[WATCH THE VIDEO](https://vimeo.com/78830111)
-
 This project is written in Python.  It employs Computer Vision algorithms
 provided by __SimpleCV__ to establish a reference frame in the image.  Then it
-employs OpenGL fragment shaders through __Pyglet__ to quickly warp (or
-"unwrap") the image.  (See the [code directory](code) for more details.)
+warps (or "unwraps") the image based on that reference frame, using OpenGL
+fragment shaders through __Pyglet__.  (See [how it works](code).)
+
+[(watch the Super Hexagon trailer "unwrapped" here)](https://vimeo.com/78830111)
 
 ![comparison](img/comparison.gif)
 
