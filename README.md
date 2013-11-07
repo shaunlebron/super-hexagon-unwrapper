@@ -1,13 +1,13 @@
 ![Super Hexagon Unwrapper](img/header.png)
 
-__Super Hexagon__ (shown below on the left) is a game by Terry Cavanagh.  This
+__[Super Hexagon](http://superhexagon.com/)__ (shown below on the left) is a game by Terry Cavanagh.  This
 project provides a different perspective for this game (shown below on the
 right).  Angular motion is converted into lateral motion, resulting in two
 different representations for the same gameplay. (Notice: the limited range of
 the original image causes black space in the new broader image).
 
 This project is written in Python.  It employs Computer Vision algorithms
-provided by __SimpleCV__ to establish a reference frame in the image.  Then it
+provided by __[SimpleCV](http://www.simplecv.org/)__ to establish a reference frame in the image.  Then it
 warps (or "unwraps") the image based on that reference frame, using OpenGL
 fragment shaders.  ([more details here](code))
 
