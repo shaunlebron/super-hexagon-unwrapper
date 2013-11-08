@@ -1,17 +1,17 @@
 ![Super Hexagon Unwrapper](img/header.png)
 
-__[Super Hexagon](http://superhexagon.com/)__ (shown below on the left) is a game by Terry Cavanagh.  This
-project provides a different perspective for this game (shown below on the
-right).  Angular motion is converted into lateral motion, resulting in two
-different representations for the same gameplay. (Notice: the limited range of
-the original image causes black space in the new broader image).
+[![comparison](img/comparison.gif)](https://vimeo.com/78830111)
+
+__[Super Hexagon](http://superhexagon.com/)__ (shown above on the left) is a
+game by Terry Cavanagh.  This project warps that image into a different
+perspective (shown above on the right).  Angular motion is converted into
+lateral motion, resulting in two different representations for the same
+gameplay.  (Click the image above to see the video).
 
 This project is written in Python.  It employs Computer Vision algorithms
-provided by __[SimpleCV](http://www.simplecv.org/)__ to establish a reference frame in the image.  Then it
-warps (or "unwraps") the image based on that reference frame, using OpenGL
-fragment shaders.  ([more details here](code))
-
-[![comparison](img/comparison.gif)](https://vimeo.com/78830111)
+provided by __[SimpleCV](http://www.simplecv.org/)__ to establish a reference
+frame in the image.  Then it warps (or "unwraps") the image based on that
+reference frame, using OpenGL fragment shaders.  ([more details here](code))
 
 ```
 Unwrap a video:
@@ -27,13 +27,13 @@ Script options
 --start N       (start at frame N)
 --stop N        (stop at frame N)
 --out DIR       (dump all frames into the given DIR)
-```
 
-```
-Dependencies
+Script Dependencies
 
 * Python 2.7
 * SimpleCV 1.3  (for video processing and computer vision)
 * Pyglet        (for fast image transforms with OpenGL shaders)
 ```
 
+* [Encode a video](vid)
+* [Learn how it works](code)
