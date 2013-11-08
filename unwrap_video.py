@@ -179,7 +179,7 @@ if __name__ == "__main__":
 
     # Create optional args from those parsed
     opts = {}
-    if args.dumpdir:
+    if args.out:
         opts['dump_dir'] = args.out
     if args.start:
         opts['start_frame'] = args.start
