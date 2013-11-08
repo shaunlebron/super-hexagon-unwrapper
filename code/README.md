@@ -1,5 +1,10 @@
 ![how it works](../img/title_howitworks.png)
 
+The following image "test.jpg" is used for testing the code, as shown in the
+following examples.
+
+![test](../img/test.jpg)
+
 We find the vertices of the center polygon, then extend axis lines from the
 center through each vertex (shown in red below).  This creates the sectors of
 our reference frame that we will use to unwrap the image.  The following script
