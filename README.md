@@ -6,7 +6,7 @@ __[Super Hexagon](http://superhexagon.com/)__ (shown above on the left) is a
 game by Terry Cavanagh.  This project warps that image into a different
 perspective (shown above on the right).  Angular motion is converted into
 lateral motion, resulting in two different representations for the same
-gameplay.  (Click the image above to see the video).
+gameplay.  (__[watch the composite video](https://vimeo.com/78922669)__).
 
 This project is written in Python.  It employs Computer Vision algorithms
 provided by __[SimpleCV](http://www.simplecv.org/)__ to establish a reference
