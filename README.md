@@ -8,14 +8,14 @@ perspective (shown above on the right).  Angular motion is converted into
 lateral motion, resulting in two different representations for the same
 gameplay.
 
-- __[Watch the video!](https://vimeo.com/78922669)__
+[>> Watch the video](https://vimeo.com/78922669)
 
 This project is written in Python.  It employs Computer Vision algorithms
 provided by __[SimpleCV](http://www.simplecv.org/)__ to establish a reference
 frame in the image.  Then it warps (or "unwraps") the image based on that
 reference frame, using OpenGL fragment shaders.
 
-- __[Learn how it works](code)__
+[>> Learn how it works](code)
 
 ```
 Unwrap a video:
