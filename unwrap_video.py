@@ -8,11 +8,7 @@ import sys
 import os
 import argparse
 
-# SimpleCV image processing and computer vision library
-import SimpleCV as scv
-
 # Custom "Super Hexagon" parsing library
-from code.parse import parse_frame
 from code.unwrap import start_unwrap_window, Unwrapper
 
 class VideoDone(Exception):
@@ -103,35 +99,26 @@ def unwrap_video(video_path, start_frame=0, stop_frame=-1, dump_dir=None, print_
         else:
             log('processing frame:', self["i"],'(%d fps)' % unwrapper.get_fps())
 
-        # Get the features out of the image.
-        frame = parse_frame(img)
-
         # Create file names of the dumped frames.
         orig_name = get_dump_name('orig')
         unwrap_name = get_dump_name('unwrap')
 
         # Generate and show the unwrapped image.
-        if frame:
-            if not dump_dir:
-                # Write the image to a temp file so pyglet can read the texture.
-                img.save('tmp.jpg')
-                unwrapper.update('tmp.jpg', frame)
-                unwrapper.draw()
-            else:
-                # Dump the original frame.
-                img.save(orig_name)
-
-                # Update the unwrapper and draw the unwrapped frame.
-                unwrapper.update(orig_name, frame)
-                unwrapper.draw()
-
-                # Dump the unwrapped frame.
-                unwrapper.save_image(unwrap_name)
+        if not dump_dir:
+            # Write the image to a temp file so pyglet can read the texture.
+            img.save('tmp.jpg')
+            unwrapper.update('tmp.jpg', frame)
+            unwrapper.draw()
         else:
-            if dump_dir:
-                # dump the current images if the parsing failed
-                img.save(orig_name)
-                unwrapper.save_image(unwrap_name)
+            # Dump the original frame.
+            img.save(orig_name)
+
+            # Update the unwrapper and draw the unwrapped frame.
+            unwrapper.update(orig_name, frame)
+            unwrapper.draw()
+
+            # Dump the unwrapped frame.
+            unwrapper.save_image(unwrap_name)
 
         self["total"] += 1
 

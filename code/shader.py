@@ -10,6 +10,7 @@ Distributed under the Boost Software License, Version 1.0
 """
 
 from pyglet.gl import *
+from ctypes import *
 
 class Shader:
 	# vert, frag and geom take arrays of source strings
@@ -95,7 +96,7 @@ class Shader:
 		# unbind whatever program is currently bound - not necessarily this program,
 		# so this should probably be a class method instead
 		glUseProgram(0)
-	
+
 	# upload a floating point uniform vector
 	# this program must be currently bound
 	def uniformfv(self, name, size, vals):
@@ -141,4 +142,3 @@ class Shader:
 		loc = glGetUniformLocation(self.Handle, name)
 		# uplaod the 4x4 floating point matrix
 		glUniformMatrix4fv(loc, 1, False, (c_float * 16)(*mat))
-
